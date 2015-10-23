@@ -7,6 +7,8 @@ object Main {
     val sc = new SparkContext(conf)
     val sqlCtx = new SQLContext(sc)
 
-
+    val input = sqlCtx.jsonFile("../data/tweets/*/*")
+    input.registerTempTable("tweets")
+    sqlCtx.sql("SELECT text, retweetCount FROM tweets ORDER BY retweetCount").first()
   }
 }
